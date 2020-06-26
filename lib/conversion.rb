@@ -80,15 +80,13 @@ class Conversion
   def process
     number_to_words_combinations
     c_words = @correct_words.values
-    combination_words =  if c_words.length == 1
-                [c_words[0].join("-")]
-              elsif c_words.length == 2
-                c_words[0].product(c_words[1]).map(&:flatten).map {|w| w.join("-")}
-              elsif c_words.length === 3
-                c_words[0].product(c_words[1]).product(c_words[2]).map(&:flatten).map {|w| w.join("-")}
-              else
-                c_words
-              end
+    combination_words = if c_words.length == 2
+                          c_words[0].product(c_words[1]).map(&:flatten).map {|w| w.join("-")}
+                        elsif c_words.length === 3
+                          c_words[0].product(c_words[1]).product(c_words[2]).map(&:flatten).map {|w| w.join("-")}
+                        else
+                          c_words
+                        end
     result = []
     combination_words.each do |v|
       special_chars = @phone_number.gsub(/[2-9.]/, '')
